@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "util.h"
+#include "job.h"
+#include "permuta.h"
 
 int main(int argc, char **argv)
 {
