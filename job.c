@@ -11,3 +11,19 @@ Job ler_jobs(int n){
 
 	return vet;
 }
+
+int get_tempo(Job j){
+	return j->tempo;
+}
+
+int get_deadline(Job j){
+	return j->deadline;
+}
+
+int get_multa(Job j){
+	return j->multa;
+}
+
+void libera_job(Job j){
+	FREE(j);
+}
