@@ -1,7 +1,7 @@
 all:
 	gcc -c util.c
 	gcc -c listaGen.c
-	gcc -c job.h
+	gcc -c job.c
 	gcc -c permuta.c
 	gcc -c algoritmos.c
 	gcc -c main.c

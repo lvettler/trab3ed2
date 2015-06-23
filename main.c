@@ -3,7 +3,7 @@
 #include "job.h"
 #include "permuta.h"
 #include "listaGen.h"
-#include "algoritmos.c"
+#include "algoritmos.h"
 
 int main(int argc, char **argv)
 {

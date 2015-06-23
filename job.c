@@ -1,18 +1,19 @@
-#include "job.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "job.h"
+#include "util.h"
 
 tJob criaJob(){
 	tJob j = (tJob)malloc(sizeof(struct job));
-	j.tempo = 0;
-	j.deadline = 0;
-	j.multa = 0;
+	j->tempo = 0;
+	j->deadline = 0;
+	j->multa = 0;
 }
 
 tJob lerJob(int id){
 	tJob j = criaJob();
-	j.id = id;
-	scanf("%d %d %d", &j.tempo, &j.deadline, &j.multa);
+	j->id = id;
+	scanf("%d %d %d", &j->tempo, &j->deadline, &j->multa);
 	return j;
 }
 

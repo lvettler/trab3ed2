@@ -1,7 +1,9 @@
-#include "listaGen.h"
-#include "permuta.h"
 #include <string.h>
 #include <stdlib.h>
+#include "listaGen.h"
+#include "permuta.h"
+#include "util.h"
+
 
 tPermuta branchBound(listaGen l){
 	tPermuta limite = copiaPermuta((tPermuta)getItem(getIni(l)));
