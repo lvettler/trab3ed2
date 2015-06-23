@@ -1,22 +1,23 @@
-#ifndef  Job_H_
-#define Job_H_ 
+#ifndef  JOB_H_
+#define JOB_H_ 
 
-struct job{
+typedef struct job{
 	int tempo;
 	int deadline;
 	int multa;
-};
+	int id;
+}*tJob;
 
-typedef struct job *Job;
+tJob criaJob();
 
-Job ler_jobs(int n);
+tJob lerJob(int id);
 
-int get_tempo(Job j);
+int getTempo(tJob j);
 
-int get_deadline(Job j);
+int getDeadline(tJob j);
 
-int get_multa(Job j);
+int getMulta(tJob j);
 
-void libera_job(Job j);
+void liberaJob(void* j);
 
 #endif

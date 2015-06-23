@@ -1,9 +1,11 @@
-#include "util.h"
-#include "job.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "util.h"
+#include "job.h"
+#include "listaGen.h"
+#include "permuta.h"
 
-int verifica_tipo(char* tipo){
+algoritmo verificaTipo(char* tipo){
 	
 	if(strcmp(tipo, "bs") == 0)
 		return BS;
@@ -12,30 +14,40 @@ int verifica_tipo(char* tipo){
 		return BB;
 }
 
-int calcula_multa(Job sequenciaJobs[], int numeroJobs){
+void adicionaPermutaOrdenada(listaGen* l, no n){
+	tPermuta p = getItem(n);
+	int lowerBound = getLowerBound(p);
+	no aux, ant;
+	if(getTam(*l) == 0)
+		pushBack(*l, n);
+	else if(getLowerBound((tPermuta)getItem(getFim(*l))) <= lowerBound)
+		pushBack(*l, n);
+	else if(getLowerBound((tPermuta)getItem(getIni(*l))) >= lowerBound)
+		pushFront(*l, n);
+	else{
+		for(aux = (*l)->ini; aux != NULL && getLowerBound((tPermuta)getItem(aux)); ant = aux, aux = aux->prox);
+		ant->prox = n;
+		n->prox = aux;
+		(*l)->tam++;
+	}
+}
+
+/*int calculaMulta(tJob sequenciaJobs[], int numeroJobs){
 	int tempo = 0, multa = 0, i;
 
 	for (i = 0; i < numeroJobs; i++){
-		tempo = tempo + get_tempo(sequenciaJobs[i]);
+		tempo = tempo + getTempo(sequenciaJobs[i]);
 
 		if(tempo > sequenciaJobs[i]->deadline)
-			multa = multa + get_multa(sequenciaJobs[i]);
+			multa = multa + getMulta(sequenciaJobs[i]);
 		
 	}
 	return multa;
 }
 
-int calcula_todas_multa(Job sequenciaJobs[], int numeroJobs){
+int calculaTodasMulta(tJob sequenciaJobs[], int numeroJobs){
 	int multa = 0, i;
 	for(i=0; i < numeroJobs; i++){
-		multa = multa + get_multa(sequenciaJobs[i]);
+		multa = multa + getMulta(sequenciaJobs[i]);
 	}
-}
-
-
-void sequencia_inicial(int vet[], int n){
-	int i;
-	for(i = 0; i < n; i++){
-		vet[i] = i;
-	}
-}
+}*/

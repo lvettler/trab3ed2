@@ -2,28 +2,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Job ler_jobs(int n){
-	int i;
-	Job vet = (Job)malloc(n*sizeof(Job));
-
-	for(i = 0; i < n; i++)
-		scanf("%d %d %d", &vet[i].tempo, &vet[i].deadline, &vet[i].multa);
-
-	return vet;
+tJob criaJob(){
+	tJob j = (tJob)malloc(sizeof(struct job));
+	j.tempo = 0;
+	j.deadline = 0;
+	j.multa = 0;
 }
 
-int get_tempo(Job j){
+tJob lerJob(int id){
+	tJob j = criaJob();
+	j.id = id;
+	scanf("%d %d %d", &j.tempo, &j.deadline, &j.multa);
+	return j;
+}
+
+int getTempo(tJob j){
 	return j->tempo;
 }
 
-int get_deadline(Job j){
+int getDeadline(tJob j){
 	return j->deadline;
 }
 
-int get_multa(Job j){
+int getMulta(tJob j){
 	return j->multa;
 }
 
-void libera_job(Job j){
+int getId(tJob j){
+	return j->id;
+}
+
+void liberaJob(void* j){
 	FREE(j);
 }

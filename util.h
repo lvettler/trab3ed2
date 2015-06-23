@@ -1,28 +1,18 @@
 #ifndef  UTIL_H_
 #define UTIL_H_ 
-#define FREE(x) if(x != NULL){free(x); x = NULL}
+#include "listaGen.h"
 
-typedef enum algoritmo{BS, BB}algoritmo;
+#define FREE(x) if(x != NULL){free(x); x == NULL;}
 
-int verifica_tipo(char* tipo);
+typedef enum {BS, BB}algoritmo;
 
-int calcula_multa(Job sequenciaJobs[], int numeroJobs);
+algoritmo verificaTipo(char* tipo);
 
-int calcula_todas_multa(Job sequenciaJobs[], int numeroJobs);
+void adicionaPermutaOrdenada(listaGen* l, no n);
 
-void sequencia_inicial(int vet[], int n);
+/*int calculaMulta(tJob sequenciaJobs[], int numeroJobs);
 
-
-
-
-
-
-
-
-
-
-
-
-
+int calculaTodasMulta(tJob sequenciaJobs[], int numeroJobs);
+*/
 #endif
 
