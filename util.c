@@ -9,7 +9,6 @@ algoritmo verificaTipo(char* tipo){
 	
 	if(strcmp(tipo, "bs") == 0)
 		return BS;
-	
 	else if(strcmp(tipo, "bb") == 0)
 		return BB;
 }
@@ -31,23 +30,3 @@ void adicionaPermutaOrdenada(listaGen* l, no n){
 		(*l)->tam++;
 	}
 }
-
-/*int calculaMulta(tJob sequenciaJobs[], int numeroJobs){
-	int tempo = 0, multa = 0, i;
-
-	for (i = 0; i < numeroJobs; i++){
-		tempo = tempo + getTempo(sequenciaJobs[i]);
-
-		if(tempo > sequenciaJobs[i]->deadline)
-			multa = multa + getMulta(sequenciaJobs[i]);
-		
-	}
-	return multa;
-}
-
-int calculaTodasMulta(tJob sequenciaJobs[], int numeroJobs){
-	int multa = 0, i;
-	for(i=0; i < numeroJobs; i++){
-		multa = multa + getMulta(sequenciaJobs[i]);
-	}
-}*/

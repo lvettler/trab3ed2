@@ -7,14 +7,13 @@
 
 int main(int argc, char **argv)
 {
-	int numeroJobs, custoMinimo, *sequenciaMinima;
+	int numeroJobs;
 	numeroJobs = atoi(argv[1]);
 	algoritmo tipo = verificaTipo(argv[2]);
 	tPermuta p = lerPermuta(numeroJobs);
 	no n = criaNo(p);
 	listaGen l = criaListaGen();
 	pushBack(l, n);
-	
 	tPermuta result;
 	
 	if(tipo == BS)
@@ -26,7 +25,7 @@ int main(int argc, char **argv)
 	{
 		result = branchBound(l);
 	}
-	
+
 	imprimePermuta(result);
 	
 	return 0;

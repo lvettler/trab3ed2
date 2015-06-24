@@ -36,11 +36,13 @@ tPermuta lerPermuta(int tamanho){
 	for(i = 0; i < tamanho; i++){
 		adicionaNpos(p, lerJob(i));
 	}
+	return p;
 }
 
 tPermuta copiaPermuta(tPermuta p){
-	tPermuta c;
-	memcpy(c, p, sizeof(tPermuta));
+	tPermuta c = criaPermuta(p->ip + p->in);
+	memset(c, 0, sizeof(struct permuta));
+	memcpy(c, p, sizeof(struct permuta));
 	return c;
 }
 
@@ -61,14 +63,18 @@ int isTerminado(tPermuta p){
 }
 
 tJob* getPos(tPermuta p){
-	tJob *j;
-	memcpy(j, p->pos, sizeof(tJob)*p->ip);
+	int tam = getTamPermuta(p);
+	tJob *j = (tJob*)malloc(sizeof(tJob)*(tam));
+	memset(j, 0, sizeof(tJob)*tam);
+	memcpy(j, p->pos, sizeof(tJob)*(tam));
 	return j;
 }
 
 tJob* getNPos(tPermuta p){
-	tJob *j;
-	memcpy(j, p->npos, sizeof(tJob)*p->in);
+	int tam = getTamPermuta(p);
+	tJob *j = (tJob*)malloc(sizeof(tJob)*(tam));
+	memset(j, 0, sizeof(tJob)*tam);
+	memcpy(j, p->npos, sizeof(tJob)*(tam));
 	return j;
 }
 
@@ -80,37 +86,37 @@ int getTamNPos(tPermuta p){
 	return p->in;
 }
 
-/*void posiciona(tPermuta p, int pos){
-	adicionaPos(p, p->npos[pos]);
-	int i;
-	p->in--;
-	for(i = pos; i < p->in; i++){
-		p->npos[i] = p->npos[i+1];
-	}
-}*/
+int getTamPermuta(tPermuta p){
+	return getTamPos(p) + getTamNPos(p);
+}
 
 void processa(tPermuta p, int lowerBound, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index){
-	tJob novo;
-	memcpy(novo, npos[index], sizeof(tJob));
+	int tam = tamPos + tamNPos;
+	tJob novo = criaJob(tam);
+	memset(novo, 0 , sizeof(struct job));
+	memcpy(novo, npos[index], sizeof(struct job));
 	
-	memcpy(p->pos, pos, sizeof(tJob)*tamPos);
+	memset(p->pos, 0, sizeof(struct job)*tam);
+	memcpy(p->pos, pos, sizeof(struct job)*tam);
 	p->pos[tamPos++] = novo;
-	p->ip = tamPos;
+	p->ip = tam;
 	
-	memcpy(p->npos, npos, sizeof(tJob)*index);
-	memcpy(p->npos+index, npos+index+1, sizeof(tJob)*(tamNPos - index - 1));
+	memcpy(p->npos, npos, sizeof(struct job)*index);
+	memcpy(p->npos+index, npos+index+1, sizeof(struct job)*(tam - index - 1));
 	p->in--;
 	
 	p->lb = lowerBound;
-	p->ub -= getMulta(npos[index]);
-	p->tempoDecorrido += getTempo(npos[index]);
+	p->ub -= getMulta(novo);
+	p->tempoDecorrido += getTempo(novo);
 }
 
-void imprimePermuta(tPermuta p){
+void imprimePermuta(void* ptr){
 	int i;
+	tPermuta p = (tPermuta)ptr;
 	printf("%d: ", p->lb);
-	for(i = 0; i < p->ip; i++)
+	for(i = 0; i < p->ip; i++){
 		printf("%d ", getId(p->pos[i]));
+	}
 	printf("\n");
 }
 

@@ -2,11 +2,13 @@
 #define LISTAGEN_H_
 
 typedef struct no{
-	void *item;
+	void* item;
 	struct no* prox;
 }*no;
 
 no criaNo(void* item);
+
+void* getItem(no n);
 
 void liberaNo(no n, void f(void*));
 
@@ -27,8 +29,6 @@ void pushBack(listaGen l, no conteudo);
 no popFront(listaGen l);
 
 no popBack(listaGen l);
-
-void* getItem(no n);
 
 int getTam(listaGen l);
 

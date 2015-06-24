@@ -16,6 +16,10 @@ void liberaNo(no n, void f(void*)){
 	FREE(n);
 }
 
+void* getItem(no n){
+	return n->item;
+}
+
 listaGen criaListaGen(){
 	listaGen lista = (listaGen)malloc(sizeof(struct lista));
 	lista->ini = lista->fim = NULL;
@@ -69,10 +73,6 @@ no popBack(listaGen l){
 	l->fim = ant;
 	l->tam--;
 	return aux;
-}
-
-void* getItem(no n){
-	return n->item;
 }
 
 int getTam(listaGen l){

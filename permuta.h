@@ -40,6 +40,8 @@ int getTamNPos(tPermuta p);
 
 void processa(tPermuta p, int lowerBound, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index);
 
+void imprimePermuta(void* p);
+
 void liberaPermuta(void* p);
 
 #endif
