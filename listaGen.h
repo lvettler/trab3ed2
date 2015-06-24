@@ -1,6 +1,9 @@
 #ifndef LISTAGEN_H_
 #define LISTAGEN_H_
 
+#include <stdlib.h>
+#include <stdio.h>
+
 typedef struct no{
 	void* item;
 	struct no* prox;

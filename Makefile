@@ -1,4 +1,35 @@
-all:
+
+
+all: listaGen.o permuta.o algoritmos.o job.o util.o
+	gcc -Wall -g -pedantic -std=c99 *.o main.c -o trab4
+
+
+listaGen.o: listaGen.h listaGen.c
+	gcc -Wall -g -pedantic -std=c99 -c listaGen.c 
+
+
+permuta.o: permuta.h permuta.c
+	gcc -Wall -g -pedantic -std=c99 -c permuta.c 
+
+
+algoritmos.o: algoritmos.h algoritmos.c
+	gcc -Wall -g -pedantic -std=c99 -c algoritmos.c 
+
+
+job.o: job.h job.c
+	gcc -Wall -g -pedantic -std=c99 -c job.c 
+
+
+util.o: util.h util.c
+	gcc -Wall -g -pedantic -std=c99 -c util.c 
+
+run:
+	./trab4 4 bb < entrada.txt
+
+clean:
+	rm *.o trab4
+
+easy:
 	gcc -c util.c
 	gcc -c listaGen.c
 	gcc -c job.c

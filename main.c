@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "util.h"
 #include "job.h"
 #include "permuta.h"

@@ -1,14 +1,8 @@
-#include <string.h>
-#include <stdlib.h>
-
+#include "algoritmos.h"
 
 #include "job.h"
 #include <stdio.h>
 
-
-#include "listaGen.h"
-#include "permuta.h"
-#include "util.h"
 
 tPermuta branchBound(listaGen l){
 	
@@ -40,7 +34,7 @@ tPermuta branchBound(listaGen l){
 		
 		int i;
 		for(i = 0; i < tamNPos; i++){
-			
+
 			tJob aux = npos[i];
 			int auxDuracao = duracao + getTempo(aux);
 			int auxLowerBound = (auxDuracao > getDeadline(aux) ? getMulta(aux) + lowerBound: lowerBound);
@@ -48,15 +42,19 @@ tPermuta branchBound(listaGen l){
 			if(auxLowerBound <= upperBoundLimite){
 		
 				tPermuta nova = criaPermuta(tamNPos+tamPos);
-				processa(nova, auxLowerBound, pos, tamPos, npos, tamNPos, i);
+				processa(nova, pos, tamPos, npos, tamNPos, i);
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
 
 			}
 			
 		}
-		
+
+		for (i = 0; i < tamPos; ++i)
+			liberaJob(pos[i]);
 		FREE(pos);
+		for (i = 0; i < tamNPos; ++i)
+			liberaJob(npos[i]);
 		FREE(npos);
 		
 	}
@@ -69,8 +67,6 @@ tPermuta branchBound(listaGen l){
 }
 
 tPermuta beamSearch(listaGen l, int w){
-	int indice = 0;
-	
 	while (!isTerminado((tPermuta)getItem(getIni(l)))){
 	
 		no front = popFront(l);
@@ -93,18 +89,21 @@ tPermuta beamSearch(listaGen l, int w){
 			int auxDuracao = duracao + getTempo(aux);
 			int auxLowerBound = (auxDuracao > getDeadline(aux) ? getMulta(aux) + lowerBound: lowerBound);
 			
-			if(indice < w || (auxLowerBound < getLowerBound((tPermuta)getItem(getFim(l))))){
+			if(getTam(l) < w || (auxLowerBound < getLowerBound((tPermuta)getItem(getFim(l))))){
 			
 				tPermuta nova = criaPermuta(tamNPos+tamPos);
-				processa(nova, auxLowerBound, pos, tamPos, npos, tamNPos, i);
+				processa(nova, pos, tamPos, npos, tamNPos, i);
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
-				indice++;
 				
 			}
 		}
 		
+		for (i = 0; i < tamPos; ++i)
+			liberaJob(pos[i]);
 		FREE(pos);
+		for (i = 0; i < tamNPos; ++i)
+			liberaJob(npos[i]);
 		FREE(npos);
 
 	}

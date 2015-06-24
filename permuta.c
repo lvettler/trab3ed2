@@ -1,9 +1,4 @@
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "permuta.h"
-#include "util.h"
-#include "job.h"
 
 tPermuta criaPermuta(int tamanho){
 	tPermuta p = (tPermuta)malloc(sizeof(struct permuta));
@@ -20,14 +15,15 @@ tPermuta criaPermuta(int tamanho){
 void adicionaNpos(tPermuta p, tJob j){
 	p->npos[p->in++] = j;
 	p->ub += getMulta(j);
+	if(p->tempoDecorrido > getDeadline(j))
+		p->lb += getMulta(j);
 }
 
 void adicionaPos(tPermuta p, tJob j){
 	p->pos[p->ip++] = j;
 	p->tempoDecorrido += getTempo(j);
-	if (p->tempoDecorrido > getDeadline(j)){
+	if (p->tempoDecorrido > getDeadline(j))
 		p->lb += getMulta(j);
-	}
 }
 
 tPermuta lerPermuta(int tamanho){
@@ -41,8 +37,14 @@ tPermuta lerPermuta(int tamanho){
 
 tPermuta copiaPermuta(tPermuta p){
 	tPermuta c = criaPermuta(p->ip + p->in);
-	memset(c, 0, sizeof(struct permuta));
-	memcpy(c, p, sizeof(struct permuta));
+	for(int i = 0; i < p->ip; ++i){
+		tJob aux = copiaJob(p->pos[i]);
+		adicionaPos(c, aux);
+	}
+	for (int i = 0; i < p->in; ++i){
+		tJob aux = copiaJob(p->npos[i]);
+		adicionaNpos(c, aux);
+	}
 	return c;
 }
 
@@ -63,18 +65,18 @@ int isTerminado(tPermuta p){
 }
 
 tJob* getPos(tPermuta p){
-	int tam = getTamPermuta(p);
+	int tam = getTamPos(p);
 	tJob *j = (tJob*)malloc(sizeof(tJob)*(tam));
-	memset(j, 0, sizeof(tJob)*tam);
-	memcpy(j, p->pos, sizeof(tJob)*(tam));
+	for (int i = 0; i < tam; ++i)
+		j[i] = copiaJob(p->pos[i]);
 	return j;
 }
 
 tJob* getNPos(tPermuta p){
-	int tam = getTamPermuta(p);
+	int tam = getTamNPos(p);
 	tJob *j = (tJob*)malloc(sizeof(tJob)*(tam));
-	memset(j, 0, sizeof(tJob)*tam);
-	memcpy(j, p->npos, sizeof(tJob)*(tam));
+	for (int i = 0; i < tam; ++i)
+		j[i] = copiaJob(p->npos[i]);
 	return j;
 }
 
@@ -90,37 +92,26 @@ int getTamPermuta(tPermuta p){
 	return getTamPos(p) + getTamNPos(p);
 }
 
-void processa(tPermuta p, int lowerBound, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index){
+void processa(tPermuta p, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index){
+	tJob novo = copiaJob(npos[index]);
 
-	int tam = tamPos + tamNPos;
-	printf("XOTA: %d = %d + %d\n", tam, tamPos, tamNPos);
-	tJob novo = criaJob(tam);
-	printf("CU\n");
+	for (int i = 0; i < tamPos; ++i)
+		adicionaPos(p, pos[i]);
+	adicionaPos(p,novo);
 	
-	memset(novo, 0 , sizeof(struct job));
-	memcpy(novo, npos[index], sizeof(struct job));
+	for (int i = 0; i < index; ++i)
+		adicionaNpos(p, npos[i]);
 
-	memset(p->pos, 0, sizeof(struct job)*tam);
-	memcpy(p->pos, pos, sizeof(struct job)*tam);
-	p->pos[tamPos++] = novo;
-	p->ip = tam;
-	
-	memcpy(p->npos, npos, sizeof(struct job)*index);
-	memcpy(p->npos+index, npos+index+1, sizeof(struct job)*(tam - index - 1));
-	p->in--;
-	
-	p->lb = lowerBound;
-	p->ub -= getMulta(novo);
-	p->tempoDecorrido += getTempo(novo);
+	for (int i = index + 1; i < tamNPos; ++i)
+		adicionaNpos(p, npos[i]);
 }
 
 void imprimePermuta(void* ptr){
 	int i;
 	tPermuta p = (tPermuta)ptr;
 	printf("%d: ", p->lb);
-	for(i = 0; i < p->ip; i++){
+	for(i = 0; i < p->ip; i++)
 		printf("%d ", getId(p->pos[i]));
-	}
 	printf("\n");
 }
 

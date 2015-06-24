@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "job.h"
 #include "util.h"
 
@@ -9,12 +7,22 @@ tJob criaJob(int id){
 	j->deadline = 0;
 	j->multa = 0;
 	j->id = id;
+	return j;
 }
 
 tJob lerJob(int id){
 	tJob j = criaJob(id);
 	scanf("%d %d %d", &j->tempo, &j->deadline, &j->multa);
 	return j;
+}
+
+tJob copiaJob(tJob j){
+	tJob c = criaJob(getId(j));
+	c->tempo = j->tempo;
+	c->deadline = j->deadline;
+	c->multa = j->multa;
+	c->id = j->id;
+	return c;
 }
 
 int getTempo(tJob j){

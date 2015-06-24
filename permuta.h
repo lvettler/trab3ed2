@@ -1,5 +1,9 @@
 #ifndef  PERMUTA_H_
 #define PERMUTA_H_ 
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "util.h"
 #include "job.h"
 
 typedef struct permuta{
@@ -38,7 +42,9 @@ int getTamPos(tPermuta p);
 
 int getTamNPos(tPermuta p);
 
-void processa(tPermuta p, int lowerBound, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index);
+int getTamPermuta(tPermuta p);
+
+void processa(tPermuta p, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index);
 
 void imprimePermuta(void* p);
 

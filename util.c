@@ -1,9 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "util.h"
-#include "job.h"
-#include "listaGen.h"
-#include "permuta.h"
+
 
 algoritmo verificaTipo(char* tipo){
 	
@@ -11,6 +7,7 @@ algoritmo verificaTipo(char* tipo){
 		return BS;
 	else if(strcmp(tipo, "bb") == 0)
 		return BB;
+	return ERRO;
 }
 
 void adicionaPermutaOrdenada(listaGen* l, no n){
@@ -24,7 +21,7 @@ void adicionaPermutaOrdenada(listaGen* l, no n){
 	else if(getLowerBound((tPermuta)getItem(getIni(*l))) >= lowerBound)
 		pushFront(*l, n);
 	else{
-		for(aux = (*l)->ini; aux != NULL && getLowerBound((tPermuta)getItem(aux)); ant = aux, aux = aux->prox);
+		for(aux = (*l)->ini; aux != NULL && getLowerBound((tPermuta)getItem(aux)) < lowerBound; ant = aux, aux = aux->prox);
 		ant->prox = n;
 		n->prox = aux;
 		(*l)->tam++;
