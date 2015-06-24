@@ -8,7 +8,7 @@ typedef struct job{
 	int id;
 }*tJob;
 
-tJob criaJob();
+tJob criaJob(int id);
 
 tJob lerJob(int id);
 

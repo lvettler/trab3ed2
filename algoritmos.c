@@ -1,16 +1,22 @@
 #include <string.h>
 #include <stdlib.h>
+
+
+#include "job.h"
+#include <stdio.h>
+
+
 #include "listaGen.h"
 #include "permuta.h"
 #include "util.h"
 
 tPermuta branchBound(listaGen l){
-
+	
 	tPermuta limite = copiaPermuta((tPermuta)getItem(getIni(l)));
 	int upperBoundLimite = getUpperBound(limite);
 	
 	while (!isTerminado((tPermuta)getItem(getIni(l)))){
-	
+		
 		no front = popFront(l);
 		tPermuta atual = (tPermuta)getItem(front);
 		
@@ -40,12 +46,12 @@ tPermuta branchBound(listaGen l){
 			int auxLowerBound = (auxDuracao > getDeadline(aux) ? getMulta(aux) + lowerBound: lowerBound);
 			
 			if(auxLowerBound <= upperBoundLimite){
-			
+		
 				tPermuta nova = criaPermuta(tamNPos+tamPos);
 				processa(nova, auxLowerBound, pos, tamPos, npos, tamNPos, i);
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
-				
+
 			}
 			
 		}

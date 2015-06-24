@@ -91,11 +91,15 @@ int getTamPermuta(tPermuta p){
 }
 
 void processa(tPermuta p, int lowerBound, tJob pos[], int tamPos, tJob npos[], int tamNPos, int index){
+
 	int tam = tamPos + tamNPos;
+	printf("XOTA: %d = %d + %d\n", tam, tamPos, tamNPos);
 	tJob novo = criaJob(tam);
+	printf("CU\n");
+	
 	memset(novo, 0 , sizeof(struct job));
 	memcpy(novo, npos[index], sizeof(struct job));
-	
+
 	memset(p->pos, 0, sizeof(struct job)*tam);
 	memcpy(p->pos, pos, sizeof(struct job)*tam);
 	p->pos[tamPos++] = novo;

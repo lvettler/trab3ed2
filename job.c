@@ -3,16 +3,16 @@
 #include "job.h"
 #include "util.h"
 
-tJob criaJob(){
+tJob criaJob(int id){
 	tJob j = (tJob)malloc(sizeof(struct job));
 	j->tempo = 0;
 	j->deadline = 0;
 	j->multa = 0;
+	j->id = id;
 }
 
 tJob lerJob(int id){
-	tJob j = criaJob();
-	j->id = id;
+	tJob j = criaJob(id);
 	scanf("%d %d %d", &j->tempo, &j->deadline, &j->multa);
 	return j;
 }

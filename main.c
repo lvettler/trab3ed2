@@ -7,6 +7,7 @@
 
 int main(int argc, char **argv)
 {
+
 	int numeroJobs;
 	numeroJobs = atoi(argv[1]);
 	algoritmo tipo = verificaTipo(argv[2]);
@@ -15,7 +16,7 @@ int main(int argc, char **argv)
 	listaGen l = criaListaGen();
 	pushBack(l, n);
 	tPermuta result;
-	
+
 	if(tipo == BS)
 	{
 		result = beamSearch(l, 5); //TODO: testar esse numero aqui (beamWidth)
