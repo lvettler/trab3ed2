@@ -4,21 +4,15 @@
 
 tPermuta branchBound(listaGen l){
 	
-	tPermuta limite = copiaPermuta((tPermuta)getItem(getIni(l)));
-	int upperBoundLimite = getUpperBound(limite);
+	int upperBoundLimite = getUpperBound((tPermuta)getItem(getIni(l)));
 	
 	while (!isTerminado((tPermuta)getItem(getIni(l)))){
 		
 		no front = popFront(l);
 		tPermuta atual = (tPermuta)getItem(front);
 		
-		if(getUpperBound(atual) < upperBoundLimite){
-		
+		if(getUpperBound(atual) < upperBoundLimite)
 			upperBoundLimite = getUpperBound(atual);
-			liberaPermuta(limite);
-			limite = copiaPermuta(atual);
-			
-		}
 		
 		int tamPos = getTamPos(atual);
 		int tamNPos = getTamNPos(atual);
@@ -58,7 +52,6 @@ tPermuta branchBound(listaGen l){
 	no r = popFront(l);
 	tPermuta retorno = copiaPermuta((tPermuta)getItem(r));
 	liberaNo(r, liberaPermuta);
-	liberaPermuta(limite);
 
 	return retorno;
 }
