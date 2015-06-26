@@ -2,6 +2,7 @@
 
 all: listaGen.o permuta.o algoritmos.o job.o util.o
 	gcc -Wall -g -pedantic -std=c99 *.o main.c -o trab4
+	#pdflatex trab4.tex
 
 
 listaGen.o: listaGen.h listaGen.c
