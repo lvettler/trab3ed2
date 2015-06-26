@@ -81,6 +81,9 @@ tPermuta beamSearch(listaGen l, int w){
 			
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
+
+				if(getTam(l) > w)
+					liberaNo(popBack(l), liberaPermuta);
 				
 			}else{
 				liberaPermuta(nova);
