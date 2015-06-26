@@ -15,7 +15,7 @@ tPermuta criaPermuta(int tamanho){
 void adicionaNpos(tPermuta p, tJob j){
 	p->npos[p->in++] = j;
 	p->ub += getMulta(j);
-	if(p->tempoDecorrido > getDeadline(j))
+	if(p->tempoDecorrido + getTempo(j) > getDeadline(j))
 		p->lb += getMulta(j);
 }
 
