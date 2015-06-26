@@ -1,8 +1,6 @@
 #include "algoritmos.h"
 
-#include "job.h"
 #include <stdio.h>
-
 
 tPermuta branchBound(listaGen l){
 	
@@ -24,8 +22,6 @@ tPermuta branchBound(listaGen l){
 		
 		int tamPos = getTamPos(atual);
 		int tamNPos = getTamNPos(atual);
-		int lowerBound = getLowerBound(atual);
-		int duracao = getDuracao(atual);
 		
 		tJob* pos = getPos(atual);
 		tJob* npos = getNPos(atual);
@@ -35,17 +31,17 @@ tPermuta branchBound(listaGen l){
 		int i;
 		for(i = 0; i < tamNPos; i++){
 
-			tJob aux = npos[i];
-			int auxDuracao = duracao + getTempo(aux);
-			int auxLowerBound = (auxDuracao > getDeadline(aux) ? getMulta(aux) + lowerBound: lowerBound);
-			
-			if(auxLowerBound <= upperBoundLimite){
+			tPermuta nova = criaPermuta(tamNPos+tamPos);
+			processa(nova, pos, tamPos, npos, tamNPos, i);
+			int auxLowerBound = getLowerBound(nova);
+
+			if(auxLowerBound <= upperBoundLimite || getTam(l) == 0){
 		
-				tPermuta nova = criaPermuta(tamNPos+tamPos);
-				processa(nova, pos, tamPos, npos, tamNPos, i);
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
 
+			}else{
+				liberaPermuta(nova);
 			}
 			
 		}
@@ -58,11 +54,12 @@ tPermuta branchBound(listaGen l){
 		FREE(npos);
 		
 	}
-	
+
 	no r = popFront(l);
 	tPermuta retorno = copiaPermuta((tPermuta)getItem(r));
 	liberaNo(r, liberaPermuta);
-	
+	liberaPermuta(limite);
+
 	return retorno;
 }
 
@@ -74,8 +71,6 @@ tPermuta beamSearch(listaGen l, int w){
 		
 		int tamPos = getTamPos(atual);
 		int tamNPos = getTamNPos(atual);
-		int lowerBound = getLowerBound(atual);
-		int duracao = getDuracao(atual);
 		
 		tJob* pos = getPos(atual);
 		tJob* npos = getNPos(atual);
@@ -85,17 +80,17 @@ tPermuta beamSearch(listaGen l, int w){
 		int i;
 		for(i = 0; i < tamNPos; i++){
 		
-			tJob aux = npos[i];
-			int auxDuracao = duracao + getTempo(aux);
-			int auxLowerBound = (auxDuracao > getDeadline(aux) ? getMulta(aux) + lowerBound: lowerBound);
+			tPermuta nova = criaPermuta(tamNPos+tamPos);
+			processa(nova, pos, tamPos, npos, tamNPos, i);
+			int auxLowerBound = getLowerBound(nova);
 			
 			if(getTam(l) < w || (auxLowerBound < getLowerBound((tPermuta)getItem(getFim(l))))){
 			
-				tPermuta nova = criaPermuta(tamNPos+tamPos);
-				processa(nova, pos, tamPos, npos, tamNPos, i);
 				no novo = criaNo(nova);
 				adicionaPermutaOrdenada(&l, novo);
 				
+			}else{
+				liberaPermuta(nova);
 			}
 		}
 		

@@ -26,8 +26,6 @@ tPermuta lerPermuta(int tamanho);
 
 tPermuta copiaPermuta(tPermuta p);
 
-int getDuracao(tPermuta p);
-
 int getLowerBound(tPermuta p);
 
 int getUpperBound(tPermuta p);

@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "job.h"
 #include "listaGen.h"
 #include "permuta.h"
 
@@ -17,4 +16,3 @@ algoritmo verificaTipo(char* tipo);
 void adicionaPermutaOrdenada(listaGen* l, no n);
 
 #endif
-

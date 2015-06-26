@@ -22,8 +22,10 @@ void adicionaNpos(tPermuta p, tJob j){
 void adicionaPos(tPermuta p, tJob j){
 	p->pos[p->ip++] = j;
 	p->tempoDecorrido += getTempo(j);
-	if (p->tempoDecorrido > getDeadline(j))
+	if (p->tempoDecorrido > getDeadline(j)){
 		p->lb += getMulta(j);
+		p->ub += getMulta(j);
+	}
 }
 
 tPermuta lerPermuta(int tamanho){
@@ -96,14 +98,14 @@ void processa(tPermuta p, tJob pos[], int tamPos, tJob npos[], int tamNPos, int 
 	tJob novo = copiaJob(npos[index]);
 
 	for (int i = 0; i < tamPos; ++i)
-		adicionaPos(p, pos[i]);
+		adicionaPos(p, copiaJob(pos[i]));
 	adicionaPos(p,novo);
 	
 	for (int i = 0; i < index; ++i)
-		adicionaNpos(p, npos[i]);
+		adicionaNpos(p, copiaJob(npos[i]));
 
 	for (int i = index + 1; i < tamNPos; ++i)
-		adicionaNpos(p, npos[i]);
+		adicionaNpos(p, copiaJob(npos[i]));
 }
 
 void imprimePermuta(void* ptr){

@@ -29,6 +29,10 @@ int main(int argc, char **argv)
 	}
 
 	imprimePermuta(result);
+
+	liberaPermuta(result);
+
+	liberaListaGen(l, liberaPermuta);
 	
 	return 0;
 }

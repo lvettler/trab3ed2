@@ -6,6 +6,7 @@
 #include "listaGen.h"
 #include "permuta.h"
 #include "util.h"
+#include "job.h"
 
 tPermuta branchBound(listaGen l);
 

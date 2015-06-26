@@ -17,7 +17,7 @@ tJob lerJob(int id){
 }
 
 tJob copiaJob(tJob j){
-	tJob c = criaJob(getId(j));
+	tJob c = criaJob(j->id);
 	c->tempo = j->tempo;
 	c->deadline = j->deadline;
 	c->multa = j->multa;
