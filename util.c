@@ -21,7 +21,7 @@ void adicionaPermutaOrdenada(listaGen* l, no n){
 	else if(getLowerBound((tPermuta)getItem(getIni(*l))) >= lowerBound)
 		pushFront(*l, n);
 	else{
-		for(aux = (*l)->ini; aux != NULL && getLowerBound((tPermuta)getItem(aux)) < lowerBound; ant = aux, aux = aux->prox);
+		for(aux = (*l)->ini; getLowerBound((tPermuta)getItem(aux)) < lowerBound; ant = aux, aux = aux->prox);
 		ant->prox = n;
 		n->prox = aux;
 		(*l)->tam++;

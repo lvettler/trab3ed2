@@ -25,7 +25,7 @@ util.o: util.h util.c
 	gcc -Wall -g -pedantic -std=c99 -c util.c 
 
 run:
-	./trab4 4 bs < entrada.txt
+	./trab4 4 bb < entrada.txt
 
 clean:
 	rm *.o trab4
